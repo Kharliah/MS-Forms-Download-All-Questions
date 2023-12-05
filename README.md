@@ -4,14 +4,15 @@ Useful if you don't have Azure permissions to give yourself API credentials and 
 
 # Step One: Getting a list of your forms
 Make sure you're authenticated in a browser with MS already and go to https://forms.office.com/formapi/api/forms
-Note the ownerId and ownerTenantId
+Note the ownerId and ownerTenantId (Control F to find them easily - they'll be the same for every form)
+Save this page somewhere
 
-# Step Two: Save this page somewhere
+# Step Two: Generate a list of URLs to your forms
 
 Replace the ownerTenantId and the ownerId with the values you noted before
 
 ```
-$jsonFilePath = "PATH_TO_YOUR_JSON"
+$jsonFilePath = "PATH_TO_YOUR_JSON" #for example "C:\Temp\forms.json"
 $json = Get-Content -Path $jsonFilePath -Raw
 $object = $json | ConvertFrom-Json
 $quizid = $object[0].value
@@ -22,7 +23,7 @@ foreach ($i in $quizid){
 }
 ```
 
-# Step Three
+# Step Three: Downloading all of the forms
 You'll now have a list of URLS paste those URLS into the const array
 
 Go back to your browser which you are authenticated with MS. Change the browswer settings to automatically download files to a folder. I chose C:\Temp\jsonDownloads
@@ -64,7 +65,7 @@ urls.forEach((url, index) => {
 });
 ```
 
-# Step Four
+# Step Four: Grabbing the questions from each form
 You should now hopefully a JSON file per quiz/form you have created.
 Back in Powershell, run the following
 
