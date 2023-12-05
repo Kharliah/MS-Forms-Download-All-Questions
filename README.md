@@ -33,7 +33,7 @@ const urls = [
 "https://forms.office.com/formapi/api/ownerTenantId/users/ownerId/forms('formId')/questions"
 ];
 
-async function fetchAndSave(url, index) {
+async function fetchAndSaveWithDelay(url, index) {
   try {
     const response = await fetch(url);
     const html = await response.text();
@@ -53,15 +53,23 @@ async function fetchAndSave(url, index) {
     link.click();
 
     console.log(`Page ${index + 1} saved as ${fileName}`);
+
   } catch (error) {
     console.error(`Error fetching page ${index + 1}:`, error);
   }
 }
 
-// Loop through the list of URLs and fetch/save each page
-urls.forEach((url, index) => {
-  fetchAndSave(url, index);
-});
+// Function to loop through the list of URLs with a delay
+async function fetchPagesWithDelay() {
+  for (let i = 0; i < urls.length; i++) {
+    await fetchAndSaveWithDelay(urls[i], i);
+    // Wait for half a second (500 milliseconds) before the next iteration
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+}
+
+// Start fetching pages with a delay
+fetchPagesWithDelay();
 ```
 
 # Step Four: Grabbing the questions from each form
