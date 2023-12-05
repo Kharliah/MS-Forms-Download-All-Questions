@@ -16,7 +16,6 @@ $jsonFilePath = "PATH_TO_YOUR_JSON" #for example "C:\Temp\forms.json"
 $json = Get-Content -Path $jsonFilePath -Raw
 $object = $json | ConvertFrom-Json
 $quizid = $object[0].value
-$quizid.id
 
 foreach ($i in $quizid){
 "https://forms.office.com/formapi/api/ownerTenantId/users/ownerId/forms('" + $i.id + "')/questions"
